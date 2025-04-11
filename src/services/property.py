@@ -67,3 +67,14 @@ async def read_by_uid(db: AsyncSession, uid: UUID) -> Optional[dict[str, str]]:
         return {"type": PropertyType.MEMORY_SIZE, "object": MemorySizeResponse}
     if not found_color and not found_height and not found_memory_size:
         raise Exception("Not found")
+
+
+async def delete(db: AsyncSession, uid: UUID) -> None:
+    if found_color := await color_crud.get_by_uid(db=db, uid=uid):
+        await color_crud.remove(db=db, obj_id=found_color.id)
+    if found_height := await height_crud.get_by_uid(db=db, uid=uid):
+        await height_crud.remove(db=db, obj_id=found_height.id)
+    if found_memory_size := await memory_size_crud.get_by_uid(db=db, uid=uid):
+        await memory_size_crud.remove(db=db, obj_id=found_memory_size.id)
+    if not found_color and not found_height and not found_memory_size:
+        raise Exception("Not found")
