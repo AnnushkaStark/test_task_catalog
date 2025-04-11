@@ -58,14 +58,12 @@ async def read(
         return await memory_size_crud.get_multi(db=db, skip=skip, limit=limit)
 
 
-async def read_by_uid(
-    db: AsyncSession, uid: UUID
-) -> Union[ColorResponse, HeightResponse, MemorySizeResponse]:
+async def read_by_uid(db: AsyncSession, uid: UUID) -> Optional[dict[str, str]]:
     if found_color := await color_crud.get_by_uid(db=db, uid=uid):
-        return found_color
+        return {"type": PropertyType.COLOR, "object": ColorResponse}
     if found_height := await height_crud.get_by_uid(db=db, uid=uid):
-        return found_height
+        return {"type": PropertyType.HIGHT, "object": HeightResponse}
     if found_memory_size := await memory_size_crud.get_by_uid(db=db, uid=uid):
-        return found_memory_size
+        return {"type": PropertyType.MEMORY_SIZE, "object": MemorySizeResponse}
     if not found_color and not found_height and not found_memory_size:
         raise Exception("Not found")
