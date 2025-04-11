@@ -1,4 +1,5 @@
 from typing import Optional, Union
+from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -7,9 +8,12 @@ from crud.color import color_crud
 from crud.height import height_crud
 from crud.memory_size import memory_size_crud
 from models import Color, Height, MemorySize
-from schemas.color import ColorPaginationResponse
-from schemas.height import HeightPaginationResponse
-from schemas.memory_size import MemorySizePahinationResponse
+from schemas.color import ColorPaginationResponse, ColorResponse
+from schemas.height import HeightPaginationResponse, HeightResponse
+from schemas.memory_size import (
+    MemorySizePahinationResponse,
+    MemorySizeResponse,
+)
 from schemas.property import PropertyBase
 from services import color as color_service
 from services import height as height_service
@@ -52,3 +56,16 @@ async def read(
         return await height_crud.get_multi(db=db, skip=skip, limit=limit)
     if prooerty_type == PropertyType.MEMORY_SIZE:
         return await memory_size_crud.get_multi(db=db, skip=skip, limit=limit)
+
+
+async def read_by_uid(
+    db: AsyncSession, uid: UUID
+) -> Union[ColorResponse, HeightResponse, MemorySizeResponse]:
+    if found_color := await color_crud.get_by_uid(db=db, uid=uid):
+        return found_color
+    if found_height := await height_crud.get_by_uid(db=db, uid=uid):
+        return found_height
+    if found_memory_size := await memory_size_crud.get_by_uid(db=db, uid=uid):
+        return found_memory_size
+    if not found_color and not found_height and not found_memory_size:
+        raise Exception("Not found")
