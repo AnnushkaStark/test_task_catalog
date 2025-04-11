@@ -1,7 +1,7 @@
 import uuid
 from typing import TYPE_CHECKING, List
 
-from sqlalchemy import UUID, Integer
+from sqlalchemy import UUID, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from databases.database import Base
@@ -28,7 +28,7 @@ class Color(Base):
     uid: Mapped[uuid.UUID] = mapped_column(
         UUID, unique=True, index=True, default=uuid.uuid4
     )
-    value: Mapped[str]
+    value: Mapped[str] = mapped_column(String, unique=True)
     products: Mapped[List["Product"]] = relationship(
         "Product", back_populates="colors", secondary=ProductColor.__table__
     )
