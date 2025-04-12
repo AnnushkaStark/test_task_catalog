@@ -1,11 +1,9 @@
 from crud.async_crud import BaseAsyncCRUD
 from models import MemorySize
-from schemas.memory_size import MemmorySizeBase, MemorySizeResponse
+from schemas.memory_size import MemmorySizeBase
 
 
-class MemmorySizeCRUD(
-    BaseAsyncCRUD[MemorySize, MemmorySizeBase, MemorySizeResponse]
-):
+class MemmorySizeCRUD(BaseAsyncCRUD[MemorySize, MemmorySizeBase]):
     pass
 
 

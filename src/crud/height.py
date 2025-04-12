@@ -1,10 +1,10 @@
 from crud.async_crud import BaseAsyncCRUD
 from models import Height
-from schemas.height import HeightResponse, HeihgtBase
+from schemas.height import HeihgtBase
 
 
-class HeightCRUD(BaseAsyncCRUD[Height, HeihgtBase, HeightResponse]):
+class HeightCRUD(BaseAsyncCRUD[Height, HeihgtBase]):
     pass
 
 
-height_crud = HeightCRUD(HeightResponse)
+height_crud = HeightCRUD(Height)

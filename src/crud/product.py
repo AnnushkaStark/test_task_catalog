@@ -7,10 +7,10 @@ from sqlalchemy.orm import joinedload, selectinload
 
 from crud.async_crud import BaseAsyncCRUD
 from models import Product
-from schemas.product import ProductBase, ProductCreate
+from schemas.product import ProductBase
 
 
-class ProductCRUD(BaseAsyncCRUD[Product, ProductBase, ProductCreate]):
+class ProductCRUD(BaseAsyncCRUD[Product, ProductBase]):
     async def get_by_uid(
         self, db: AsyncSession, uid: UUID
     ) -> Optional[Product]:
