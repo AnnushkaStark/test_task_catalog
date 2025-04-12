@@ -32,16 +32,16 @@ async def create_test_products(db: AsyncSession):
             memory_sizes_ids=[],
         ),
         ProductCreate(
-            name="FirstProduct",
+            name="SecondProduct",
             colors_ids=[],
-            heigts_ids=[4, 5, 6],
+            heigts_ids=[1, 2, 3],
             memory_sizes_ids=[],
         ),
         ProductCreate(
             name="ThirdProduct",
             colors_ids=[],
             heigts_ids=[],
-            memory_sizes_ids=[7, 8, 9],
+            memory_sizes_ids=[1, 2, 3],
         ),
     ]
     for product in products:
