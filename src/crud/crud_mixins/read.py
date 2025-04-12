@@ -1,4 +1,4 @@
-from typing import Any, Generic, List, Optional, Sequence
+from typing import Generic, List, Optional, Sequence, Union
 from uuid import UUID
 
 from sqlalchemy import func, select
@@ -25,7 +25,7 @@ class ReadAsync(Generic[ModelType]):
         return result.scalars().all()
 
     async def get_by_value(
-        self, db: AsyncSession, value: Any
+        self, db: AsyncSession, value: Union[int, str]
     ) -> Optional[ModelType]:
         statement = select(self.model).where(self.model.value == value)
         result = await db.execute(statement)
@@ -40,11 +40,10 @@ class ReadAsync(Generic[ModelType]):
             .limit(limit)
         )
         result = await db.execute(statement)
-        result = await db.execute(statement)
         rows = result.mappings().unique().all()
         return {
             "limit": limit,
             "offset": skip,
             "total": rows[0]["total"] if rows else 0,
-            "objects": [r[f"{self.model}"] for r in rows],
+            "objects": [r for r in rows],
         }
