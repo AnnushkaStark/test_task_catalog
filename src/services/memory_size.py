@@ -11,8 +11,6 @@ from schemas.property import PropertyBase
 async def create(
     db: AsyncSession, schema: PropertyBase
 ) -> Optional[MemorySize]:
-    if not schema.value.isdigit():
-        raise Exception("Invalid memory size format")
     if await memory_size_crud.get_by_value(db=db, value=schema.value):
         raise Exception("Memory size alredy exsist")
     create_schema = MemmorySizeBase(value=schema.value)

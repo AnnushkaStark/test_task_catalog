@@ -38,10 +38,10 @@ class Product(Base):
         "Color", back_populates="products", secondary=ProductColor.__table__
     )
     heights: Mapped[List["Height"]] = relationship(
-        "Heihgt", back_populates="products", secondary=ProductHeight.__table__
+        "Height", back_populates="products", secondary=ProductHeight.__table__
     )
     memory_sizes: Mapped[List["MemorySize"]] = relationship(
-        "MomorySize",
+        "MemorySize",
         back_populates="products",
         secondary=ProductMemorySize.__table__,
     )

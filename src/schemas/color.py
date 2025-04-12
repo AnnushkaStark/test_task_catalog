@@ -1,8 +1,9 @@
 from typing import List
 from uuid import UUID
 
-from pagination import PaginatedResponseBase
 from pydantic import BaseModel
+
+from schemas.pagination import PaginatedResponseBase
 
 
 class ColorBase(BaseModel):

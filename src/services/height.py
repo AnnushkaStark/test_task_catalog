@@ -11,7 +11,7 @@ from schemas.property import PropertyBase
 async def create(db: AsyncSession, schema: PropertyBase) -> Optional[Height]:
     if not schema.value.isdigit():
         raise Exception("Invalid height format")
-    if await height_crud.get_by_value(db=db, value=schema.value):
+    if await height_crud.get_by_value(db=db, value=int(schema.value)):
         raise Exception("Height alredy exsist")
-    create_schema = HeihgtBase(value=schema.value)
+    create_schema = HeihgtBase(value=int(schema.value))
     return await height_crud.create(db=db, create_schema=create_schema)

@@ -18,7 +18,7 @@ class MemorySize(Base):
     ## Attrs:
         - id: int - идентификатор
         - uid: UUID -идентификатор
-        - value: int -объем памяти
+        - value: str -объем памяти
         - products: List[Product] - связь с продуктами
 
     """

@@ -8,12 +8,9 @@ from crud.color import color_crud
 from crud.height import height_crud
 from crud.memory_size import memory_size_crud
 from models import Color, Height, MemorySize
-from schemas.color import ColorPaginationResponse, ColorResponse
-from schemas.height import HeightPaginationResponse, HeightResponse
-from schemas.memory_size import (
-    MemorySizePahinationResponse,
-    MemorySizeResponse,
-)
+from schemas.color import ColorPaginationResponse
+from schemas.height import HeightPaginationResponse
+from schemas.memory_size import MemorySizePahinationResponse
 from schemas.property import PropertyBase
 from services import color as color_service
 from services import height as height_service
@@ -60,11 +57,11 @@ async def read(
 
 async def read_by_uid(db: AsyncSession, uid: UUID) -> Optional[dict[str, str]]:
     if found_color := await color_crud.get_by_uid(db=db, uid=uid):
-        return {"type": PropertyType.COLOR, "object": ColorResponse}
+        return {"type": PropertyType.COLOR, "object": found_color}
     if found_height := await height_crud.get_by_uid(db=db, uid=uid):
-        return {"type": PropertyType.HIGHT, "object": HeightResponse}
+        return {"type": PropertyType.HIGHT, "object": found_height}
     if found_memory_size := await memory_size_crud.get_by_uid(db=db, uid=uid):
-        return {"type": PropertyType.MEMORY_SIZE, "object": MemorySizeResponse}
+        return {"type": PropertyType.MEMORY_SIZE, "object": found_memory_size}
     if not found_color and not found_height and not found_memory_size:
         raise Exception("Not found")
 

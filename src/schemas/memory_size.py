@@ -7,7 +7,7 @@ from schemas.pagination import PaginatedResponseBase
 
 
 class MemmorySizeBase(BaseModel):
-    value: int
+    value: str
 
 
 class MemorySizeResponse(MemmorySizeBase):
