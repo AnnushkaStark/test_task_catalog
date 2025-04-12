@@ -1,14 +1,32 @@
+from typing import Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi_filter import FilterDepends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.dependencies.database import get_async_db
+from api.filtres.product import ProductFilter
 from crud.product import product_crud
-from schemas.product import ProductCreate, ProductResponse
+from schemas.product import (
+    ProductCreate,
+    ProductPaginationResponse,
+    ProductResponse,
+)
 from services import product as product_service
 
 router = APIRouter()
+
+
+@router.get("/", response_model=ProductPaginationResponse)
+async def read_products(
+    skip: int = 0,
+    limit: int = 10,
+    query: Optional[str] = Query(default=None, min_length=2),
+    db: AsyncSession = Depends(get_async_db),
+    filter: ProductFilter = FilterDepends(ProductFilter),
+):
+    return await filter.filter(db=db, query=query, skip=skip, limit=limit)
 
 
 @router.get("/{product_uid}/", response_model=ProductResponse)
