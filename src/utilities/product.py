@@ -18,7 +18,7 @@ async def check_colors(
         found_colors = await color_crud.get_multi_by_ids(
             db=db, ids=schema.colors_ids
         )
-        if len(found_colors) < schema.colors_ids:
+        if len(found_colors) < len(schema.colors_ids):
             raise Exception("Not all colors was found")
         return found_colors
     return []
@@ -33,7 +33,7 @@ async def check_heights(
         found_height = await height_crud.get_multi_by_ids(
             db=db, ids=schema.heigts_ids
         )
-        if len(found_height) < schema.heigts_ids:
+        if len(found_height) < len(schema.heigts_ids):
             raise Exception("Not all heights was found")
         return found_height
     return []
@@ -48,7 +48,7 @@ async def check_memory_sizes(
         found_memory_sizes = await memory_size_crud.get_multi_by_ids(
             db=db, ids=schema.memory_sizes_ids
         )
-        if len(found_memory_sizes) < schema.memory_sizes_ids:
+        if len(found_memory_sizes) < len(schema.memory_sizes_ids):
             raise Exception("Not all memory sizes was found")
         return found_memory_sizes
     return []
